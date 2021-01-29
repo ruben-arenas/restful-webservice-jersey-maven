@@ -49,11 +49,14 @@ pipeline
       steps 
       {
         echo '=== Deploy Maven Docker Image ==='
-        sh 'mv devops/playbook.yaml .'     
+        sh 'mv devops/replace-yaml.py .'
+        sh 'mv devops/ingress-deployment.yaml .'     
         script
         {                   
           def image_id = registry + ":$BUILD_NUMBER"                   
-          sh "ansible-playbook  playbook.yaml --extra-vars \"image_id=${image_id}\""               
+          sh "python ${env.GIT_COMMIT} ${image_id}"
+          sh "kubectl config use-context jenkins"
+          sh "kubectl apply -f ingress-deployment.yaml"             
         }           
       }       
     }   

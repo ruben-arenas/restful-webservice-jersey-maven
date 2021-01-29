@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kubernetes.io/change-cause: {change-cause}
+  name: ingress-depl
+  labels:
+    app: middleware
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: middleware
+  template:
+    metadata:
+      labels:
+        app: middleware
+    spec:
+      containers:
+      - name: webservice-maven
+        image: {image-name-version}
+        resources:
+          limits:
+            cpu: "1"
+            memory: "200Mi"
+          requests:
+            cpu: "0.5"
+            memory: "100Mi"
