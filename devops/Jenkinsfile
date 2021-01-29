@@ -57,7 +57,7 @@ pipeline
           def commit = sh(returnStdout: true, script: 'git log -1 --oneline').trim()          
           sh "python replace-yaml.py \"${commit}\" \"${image_id}\""
           sh "/usr/local/bin/kubectl config use-context jenkins"
-          sh "/usr/local/bin/kubectl apply -f ingress-deployment.yaml"             
+          sh "/usr/local/bin/kubectl apply -f ingress-deployment.yaml -n ingress-nginx"             
         }           
       }       
     }   
