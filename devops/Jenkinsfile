@@ -56,8 +56,8 @@ pipeline
           def image_id = registry + ":$BUILD_NUMBER"
           def commit = sh(returnStdout: true, script: 'git log -1 --oneline').trim()          
           sh "python replace-yaml.py \"${commit}\" \"${image_id}\""
-          sh "kubectl config use-context jenkins"
-          sh "kubectl apply -f ingress-deployment.yaml"             
+          sh "/usr/local/bin/kubectl config use-context jenkins"
+          sh "/usr/local/bin/kubectl apply -f ingress-deployment.yaml"             
         }           
       }       
     }   
